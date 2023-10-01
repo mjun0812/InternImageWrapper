@@ -10,7 +10,14 @@ to build CUDA ext_module.
 
 ```bash
 pip install torch timm
+
+# Source Install
+git clone https://github.com/mjun0812/InternImageWrapper.git
+cd InternImageWrapper
 python setup.py build install --user
+
+# pip install from github
+pip install git+https://github.com/mjun0812/InternImageWrapper.git
 ```
 
 ## Provided Model
