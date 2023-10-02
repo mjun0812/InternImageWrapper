@@ -242,6 +242,8 @@ def create_model(
 
     model_info = MODELS[model_name]
     config = model_info["config"](**kwargs)
+    for k, v in kwargs.items():
+        config[k] = v
     model = InternImage(**config, features_only=features_only, out_indices=out_indices)
 
     if pretrained:

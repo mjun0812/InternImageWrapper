@@ -575,15 +575,6 @@ class InternImage(nn.Module):
         self.out_indices = out_indices
         self.feature_info = [dict(num_chs=channels * 2**i) for i in self.out_indices]
 
-        print(f"using core type: {core_op}")
-        print(f"using activation layer: {act_layer}")
-        print(f"using main norm layer: {norm_layer}")
-        print(f"using dpr: {drop_path_type}, {drop_path_rate}")
-        print(f"level2_post_norm: {level2_post_norm}")
-        print(f"level2_post_norm_block_ids: {level2_post_norm_block_ids}")
-        print(f"res_post_norm: {res_post_norm}")
-        print(f"remove_center: {remove_center}")
-
         in_chans = 3
         self.patch_embed = StemLayer(
             in_chans=in_chans,
