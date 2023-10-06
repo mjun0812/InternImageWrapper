@@ -35,7 +35,7 @@ DEFAULT_CONFIG = dict(
 )
 
 
-def internimage_t_1k_224(**kwargs) -> dict:
+def internimage_t_1k_224(features_only, **kwargs) -> dict:
     config = DEFAULT_CONFIG.copy()
     config.update(
         dict(
@@ -46,11 +46,14 @@ def internimage_t_1k_224(**kwargs) -> dict:
             mlp_ratio=4.0,
         )
     )
+    if features_only:
+        config["layer_scale"] = 1.0
+        config["drop_path_rate"] = 0.2
     config.update(kwargs)
     return config
 
 
-def internimage_s_1k_224(**kwargs) -> dict:
+def internimage_s_1k_224(features_only, **kwargs) -> dict:
     config = DEFAULT_CONFIG.copy()
     config.update(
         dict(
@@ -63,11 +66,14 @@ def internimage_s_1k_224(**kwargs) -> dict:
             post_norm=True,
         )
     )
+    if features_only:
+        config["layer_scale"] = 1.0
+        config["drop_path_rate"] = 0.3
     config.update(kwargs)
     return config
 
 
-def internimage_b_1k_224(**kwargs) -> dict:
+def internimage_b_1k_224(features_only, **kwargs) -> dict:
     config = DEFAULT_CONFIG.copy()
     config.update(
         dict(
@@ -80,11 +86,14 @@ def internimage_b_1k_224(**kwargs) -> dict:
             mlp_ratio=4.0,
         )
     )
+    if features_only:
+        config["layer_scale"] = 1.0
+        config["drop_path_rate"] = 0.4
     config.update(kwargs)
     return config
 
 
-def internimage_l_22kto1k_384(**kwargs) -> dict:
+def internimage_l_22kto1k_384(features_only, **kwargs) -> dict:
     config = DEFAULT_CONFIG.copy()
     config.update(
         dict(
@@ -97,11 +106,13 @@ def internimage_l_22kto1k_384(**kwargs) -> dict:
             mlp_ratio=4.0,
         )
     )
+    if features_only:
+        config["layer_scale"] = 1.0
     config.update(kwargs)
     return config
 
 
-def internimage_xl_22kto1k_384(**kwargs) -> dict:
+def internimage_xl_22kto1k_384(features_only, **kwargs) -> dict:
     config = DEFAULT_CONFIG.copy()
     config.update(
         dict(
@@ -114,11 +125,14 @@ def internimage_xl_22kto1k_384(**kwargs) -> dict:
             post_norm=True,
         )
     )
+    if features_only:
+        config["layer_scale"] = 1.0
+        config["drop_path_rate"] = 0.4
     config.update(kwargs)
     return config
 
 
-def internimage_h_22kto1k_384(**kwargs) -> dict:
+def internimage_h_22kto1k_384(features_only, **kwargs) -> dict:
     config = DEFAULT_CONFIG.copy()
     config.update(
         dict(
@@ -137,11 +151,13 @@ def internimage_h_22kto1k_384(**kwargs) -> dict:
             center_feature_scale=True,  # for InternImage-H/G
         )
     )
+    if features_only:
+        config["drop_path_rate"] = 0.5
     config.update(kwargs)
     return config
 
 
-def internimage_h_22kto1k_640(**kwargs) -> dict:
+def internimage_h_22kto1k_640(features_only, **kwargs) -> dict:
     config = DEFAULT_CONFIG.copy()
     config.update(
         dict(
@@ -160,11 +176,13 @@ def internimage_h_22kto1k_640(**kwargs) -> dict:
             center_feature_scale=True,  # for InternImage-H/G
         )
     )
+    if features_only:
+        config["drop_path_rate"] = 0.5
     config.update(kwargs)
     return config
 
 
-def internimage_g_22kto1k_512(**kwargs) -> dict:
+def internimage_g_22kto1k_512(features_only, **kwargs) -> dict:
     config = DEFAULT_CONFIG.copy()
     config.update(
         dict(
@@ -191,6 +209,8 @@ def internimage_g_22kto1k_512(**kwargs) -> dict:
             center_feature_scale=True,  # for InternImage-H/G
         )
     )
+    if features_only:
+        config["drop_path_rate"] = 0.5
     config.update(kwargs)
     return config
 
@@ -241,9 +261,7 @@ def create_model(
     assert model_name in list(MODELS.keys()), f"model {model_name} is not supported"
 
     model_info = MODELS[model_name]
-    config = model_info["config"](**kwargs)
-    for k, v in kwargs.items():
-        config[k] = v
+    config = model_info["config"](features_only, **kwargs)
     model = InternImage(**config, features_only=features_only, out_indices=out_indices)
 
     if pretrained:
