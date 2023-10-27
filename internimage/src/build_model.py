@@ -108,6 +108,7 @@ def internimage_l_22kto1k_384(features_only, **kwargs) -> dict:
     )
     if features_only:
         config["layer_scale"] = 1.0
+        config["drop_path_rate"] = 0.4
     config.update(kwargs)
     return config
 
