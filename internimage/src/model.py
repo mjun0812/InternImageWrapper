@@ -739,7 +739,10 @@ class InternImage(nn.Module):
         seq_out = []
         for level in self.levels:
             x, x_ = level(x, return_wo_downsample=True)
-            seq_out.append(x_)
+            if self.features_only and level in self.out_indices:
+                seq_out.append(x_.permute(0, 3, 1, 2).contiguous())
+            else:
+                seq_out.append(x_)
         return seq_out
 
     def forward_clip_projector(self, x):  # for InternImage-H/G
@@ -764,8 +767,7 @@ class InternImage(nn.Module):
 
     def forward(self, x):
         if self.features_only:
-            xs = self.forward_features_seq_out(x)
-            x = [xs[i].permute(0, 3, 1, 2).contiguous() for i in self.out_indices]
+            x = self.forward_features_seq_out(x)
         else:
             if self.use_clip_projector:  # for InternImage-H/G
                 x = self.forward_clip_projector(x)
