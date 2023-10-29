@@ -741,7 +741,7 @@ class InternImage(nn.Module):
             x, x_ = level(x, return_wo_downsample=True)
             if self.features_only and level in self.out_indices:
                 seq_out.append(x_.permute(0, 3, 1, 2).contiguous())
-            else:
+            elif not self.features_only:
                 seq_out.append(x_)
         return seq_out
 

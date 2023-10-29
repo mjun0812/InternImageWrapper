@@ -345,8 +345,7 @@ class DCNv3(nn.Module):
         x1 = self.dw_conv(x1)
         offset = self.offset(x1)
         mask = self.mask(x1).reshape(N, H, W, self.group, -1)
-        mask = F.softmax(mask, -1)
-        mask = mask.reshape(N, H, W, -1).type(dtype)
+        mask = F.softmax(mask, -1).reshape(N, H, W, -1).type(dtype)
 
         x = DCNv3Function.apply(
             x,
@@ -369,9 +368,7 @@ class DCNv3(nn.Module):
 
         if self.center_feature_scale:
             center_feature_scale = self.center_feature_scale_module(
-                x1,
-                self.center_feature_scale_proj_weight,
-                self.center_feature_scale_proj_bias,
+                x1, self.center_feature_scale_proj_weight, self.center_feature_scale_proj_bias
             )
             # N, H, W, groups -> N, H, W, groups, 1 -> N, H, W, groups, _d_per_group -> N, H, W, channels
             center_feature_scale = (
