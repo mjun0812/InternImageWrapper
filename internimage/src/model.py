@@ -740,7 +740,7 @@ class InternImage(nn.Module):
         for i, level in enumerate(self.levels):
             x, x_ = level(x, return_wo_downsample=True)
             if self.features_only and i in self.out_indices:
-                seq_out.append(x_.permute(0, 3, 1, 2))
+                seq_out.append(x_.permute(0, 3, 1, 2).contiguous())
             elif not self.features_only:
                 seq_out.append(x_)
         return seq_out
@@ -768,7 +768,6 @@ class InternImage(nn.Module):
     def forward(self, x):
         if self.features_only:
             x = self.forward_features_seq_out(x)
-            x = [a.contiguous() for a in x]
         else:
             if self.use_clip_projector:  # for InternImage-H/G
                 x = self.forward_clip_projector(x)
