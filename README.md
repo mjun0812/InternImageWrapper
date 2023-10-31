@@ -33,13 +33,21 @@ pip install git+https://github.com/mjun0812/InternImageWrapper.git
 
 ## Usage
 
+InternImage has a DCNv3 module, which is written in C++ CUDA.
+So, it does not run on CPUs.
+To run on CPU, specify the `core_op="DCNv3_pytorch"` option.
+
 ```python
 import torch
 import internimage
 
+# CUDA
 model = internimage.create_model("internimage_b_1k_224")
 model = internimage.create_model("internimage_b_1k_224", features_only=True)
 model = internimage.create_model("internimage_b_1k_224", features_only=True, out_indices=[2, 3])
+
+# CPU
+model = internimage.create_model("internimage_b_1k_224", core_op="DCNv3_pytorch")
 ```
 
 ## Development
