@@ -54,7 +54,7 @@ setup(
     author="Junya Morioka",
     description="Call InternImage like timm",
     install_requires=["torch", "timm"],
-    packages=find_packages(exclude=("configs", "tests")),
+    packages=find_packages(exclude=("configs", "tests", "scripts")),
     ext_modules=get_extensions(),
     cmdclass={"build_ext": torch.utils.cpp_extension.BuildExtension},
 )

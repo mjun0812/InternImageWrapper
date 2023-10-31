@@ -28,6 +28,7 @@ if type nvcc > /dev/null 2>&1; then
         --env GROUP_NAME=$GROUP_NAME \
         --env GROUP_ID=$GROUP_ID \
         --volume "$(pwd):$(pwd)" \
+        --volume "$(pwd)/tests/dataset:$(pwd)/tests/dataset" \
         --workdir $(pwd) \
         --name "${IMAGE_NAME}-$(date '+%s')" \
         "${IMAGE_NAME}-server:latest" \

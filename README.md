@@ -56,6 +56,24 @@ model = internimage.create_model("internimage_b_1k_224", core_op="DCNv3_pytorch"
 pip install -e . --user
 ```
 
+## ImageNet 1k Results
+
+| name                       | core_op       | resolution | acc@1  | acc@5  |
+|----------------------------|---------------|------------|--------|--------|
+| internimage_t_1k_224       | DCNv3(C++)    | 224x224    | 83.472 | 96.530 |
+| internimage_t_1k_224(fp16) | DCNv3(C++)    | 224x224    | 83.470 | 96.532 |
+| internimage_t_1k_224(bf16) | DCNv3(C++)    | 224x224    | NoImpl | NoImpl |
+| internimage_t_1k_224       | DCNv3_pytorch | 224x224    | 83.472 | 96.530 |
+| internimage_t_1k_224(fp16) | DCNv3_pytorch | 224x224    | 83.480 | 96.532 |
+| internimage_t_1k_224(bf16) | DCNv3_pytorch | 224x224    | 83.486 | 96.514 |
+| internimage_l_22kto1k_384  | DCNv3(C++)    | 384x384    | 87.712 | 98.384 |
+
+### ONNX
+
+| name                 | core_op       | resolution | acc@1  | acc@5  |
+|----------------------|---------------|------------|--------|--------|
+| internimage_t_1k_224 | DCNv3_pytorch | 224x224    | 83.470 | 96.532 |
+
 ## References
 
 - [Official Implementation](https://github.com/OpenGVLab/InternImage)
