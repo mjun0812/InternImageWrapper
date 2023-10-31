@@ -9,7 +9,7 @@ Before installing this repository, you need to install torch, timm, and CUDA
 to build CUDA ext_module.
 
 ```bash
-pip install torch timm
+pip install torch
 
 # Source Install
 git clone https://github.com/mjun0812/InternImageWrapper.git
@@ -40,6 +40,12 @@ import internimage
 model = internimage.create_model("internimage_b_1k_224")
 model = internimage.create_model("internimage_b_1k_224", features_only=True)
 model = internimage.create_model("internimage_b_1k_224", features_only=True, out_indices=[2, 3])
+```
+
+## Development
+
+```bash
+pip install -e . --user
 ```
 
 ## References

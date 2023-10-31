@@ -1,0 +1,55 @@
+{
+    "name": "dev",
+    "build": {
+        "dockerfile": "Dockerfile"
+    },
+    "postStartCommand": "",
+    "remoteUser": "user",
+    "updateRemoteUserUID": true,
+    "runArgs": [
+        "--gpus",
+        "all",
+        "--shm-size",
+        "8gb"
+    ],
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-python.python",
+                "ms-python.black-formatter",
+                "ms-python.isort",
+                "ms-python.vscode-pylance",
+                "shardulm94.trailing-spaces"
+            ],
+            "settings": {
+                "editor.formatOnType": true,
+                "editor.formatOnSave": true,
+                "editor.semanticHighlighting.enabled": false,
+                "[python]": {
+                    "editor.formatOnType": true,
+                    "editor.formatOnSave": true,
+                    "editor.defaultFormatter": "ms-python.black-formatter",
+                    "editor.codeActionsOnSave": {
+                        "source.organizeImports": true
+                    }
+                },
+                "python.languageServer": "Pylance",
+                "isort.args": [
+                    "--profile",
+                    "black"
+                ],
+                "python.formatting.provider": "none",
+                "python.analysis.autoImportCompletions": false,
+                "python.linting.enabled": true,
+                "black-formatter.args": [
+                    "--line-length",
+                    "99"
+                ],
+                "isort.args": [
+                    "--profile",
+                    "black"
+                ]
+            }
+        }
+    }
+}

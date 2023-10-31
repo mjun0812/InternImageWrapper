@@ -25,12 +25,14 @@ def get_extensions():
         define_macros += [("WITH_CUDA", None)]
         extra_compile_args["nvcc"] = [
             "-DCUDA_HAS_FP16=1",
+            # https://discuss.pytorch.org/t/cuda-no-half2-operators-for-cuda-9-2/18365/3
+            # https://github.com/pytorch/pytorch/blob/c3113514e91635e2cdb3fe26171a023897eb390d/cmake/Dependencies.cmake#L1642
             "-D__CUDA_NO_HALF_OPERATORS__",
             "-D__CUDA_NO_HALF_CONVERSIONS__",
             "-D__CUDA_NO_HALF2_OPERATORS__",
         ]
     else:
-        raise NotImplementedError("Cuda is not availabel")
+        return None
 
     sources = [os.path.join(extensions_dir, s) for s in sources]
     include_dirs = [extensions_dir]
@@ -52,7 +54,7 @@ setup(
     author="Junya Morioka",
     description="Call InternImage like timm",
     install_requires=["torch", "timm"],
-    packages=find_packages(),
+    packages=find_packages(exclude=("configs", "tests")),
     ext_modules=get_extensions(),
     cmdclass={"build_ext": torch.utils.cpp_extension.BuildExtension},
 )
